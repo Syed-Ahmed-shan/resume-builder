@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ name }} - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .hover-glow:hover {
+      transform: scale(1.03);
+      transition: all 0.3s;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+    }
+    a {
+      color: #90cdf4;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 1.2rem;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <div class="glass p-10 max-w-3xl w-full">
+      <img src="{{ profile }}" alt="Profile" class="w-28 h-28 rounded-full mx-auto mb-4 shadow-lg object-cover" />
+      <h1 class="text-4xl font-bold">{{ name }}</h1>
+      <p class="text-lg mt-2">{{ summary }}</p>
+      <div class="mt-4 space-x-4 text-xl">
+        <a href="{{ linkedin }}"><i class="fab fa-linkedin"></i></a>
+        <a href="{{ github }}"><i class="fab fa-github"></i></a>
+        <a href="mailto:{{ email }}"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="px-6 py-10">
+    <h2 class="text-3xl text-center mb-8">Skills</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-left max-w-6xl mx-auto">
+      <div class="hover-glow glass p-4">
+        <h3 class="font-semibold text-lg mb-2">Programming</h3>
+        <ul>
+          {% for skill in prog_skills.split(',') %}
+            <li>{{ skill.strip() }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="hover-glow glass p-4">
+        <h3 class="font-semibold text-lg mb-2">Database</h3>
+        <ul>
+          {% for db in dbms_os.split(',') %}
+            <li>{{ db.strip() }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="hover-glow glass p-4">
+        <h3 class="font-semibold text-lg mb-2">Operating Systems</h3>
+        <ul>
+          {% for os_item in os.split(',') %}
+            <li>{{ os_item.strip() }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="hover-glow glass p-4">
+        <h3 class="font-semibold text-lg mb-2">Tools</h3>
+        <ul>
+          {% for tool in tools.split(',') %}
+            <li>{{ tool.strip() }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="px-6 py-10">
+    <h2 class="text-3xl text-center mb-8">Projects</h2>
+    <div class="glass p-6 max-w-3xl mx-auto hover-glow">
+      <p>{{ projects }}</p>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section class="px-6 py-10">
+    <h2 class="text-3xl text-center mb-8">Certifications</h2>
+    <div class="glass p-6 max-w-3xl mx-auto hover-glow">
+      <p>{{ certifications }}</p>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="text-center py-6 mt-10 border-t border-gray-500">
+    <p>📱 {{ phone }} | ✉️ {{ email }}</p>
+    <p>&copy; {{ name }}'s Portfolio</p>
+
+    <!-- PDF Download -->
+    <form action="/download-portfolio" method="post" class="mt-4">
+      {% for key, value in request.form.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+      {% endfor %}
+      <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+      <button type="submit" class="mt-2 bg-cyan-300 text-black font-bold px-6 py-2 rounded hover:bg-cyan-400">
+        📄 Download PDF
+      </button>
+    </form>
+
+    <!-- Code ZIP Download -->
+    <form action="/download-portfolio-code" method="post" class="mt-2">
+      {% for key, value in request.form.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+      {% endfor %}
+      <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+      <button type="submit" class="mt-2 bg-cyan-300 text-black font-bold px-6 py-2 rounded hover:bg-cyan-400">
+        💻 Download Code ZIP
+      </button>
+    </form>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} - Resume</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm;
+      margin: 0 auto;
+      background: white;
+      box-sizing: border-box;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+      color: #2c3e50;
+    }
+    .contact {
+      font-size: 14px;
+      color: #555;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      color: #34495e;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .section p, .section li {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="resume">
+    <div class="header">
+      <h1>{{ name }}</h1>
+      <div class="contact">
+        📞 {{ phone }} | ✉️ {{ email }} | 🔗 <a href="{{ linkedin }}">{{ linkedin }}</a> | 💻 <a href="{{ github }}">{{ github }}</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Professional Summary</h2>
+      <p>{{ summary }}</p>
+    </div>
+
+    <div class="section">
+      <h2>Education</h2>
+      <p><strong>Schooling:</strong> {{ school }}</p>
+      <p><strong>Intermediate:</strong> {{ inter }}</p>
+      <p><strong>Degree:</strong> {{ degree }}</p>
+    </div>
+
+    <div class="section">
+      <h2>Skills</h2>
+      <p><strong>Programming:</strong> {{ prog_skills }}</p>
+      <p><strong>Database:</strong> {{ dbms_os }}</p>
+      <p><strong>OS:</strong> {{ os }}</p>
+      <p><strong>Tools:</strong> {{ tools }}</p>
+    </div>
+
+    {% if projects %}
+    <div class="section">
+      <h2>Projects</h2>
+      <p>{{ projects }}</p>
+    </div>
+    {% endif %}
+
+    {% if certifications %}
+    <div class="section">
+      <h2>Certifications</h2>
+      <p>{{ certifications }}</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div style="text-align: center; margin: 20px;">
+    <button onclick="downloadPDF()" style="padding: 10px 20px; background: #2c3e50; color: white; border: none; border-radius: 5px;">
+      📥 Download Resume PDF
+    </button>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById("resume");
+      const opt = {
+        margin: 0,
+        filename: "{{ name|replace(' ', '_') }}_resume.pdf",
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+</body>
+</html>

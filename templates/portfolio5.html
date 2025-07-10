@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ name }} - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: #fffafc;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+    .rounded-box {
+      border-radius: 20px;
+      transition: 0.3s;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      overflow: hidden;
+    }
+    .rounded-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 1rem;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-tr from-pink-200 to-yellow-100">
+  <img src="{{ profile }}" alt="Profile" class="w-32 h-32 rounded-full shadow-xl mb-4 object-cover">
+  <h1 class="text-4xl font-bold">{{ name }}</h1>
+  <p class="mt-2 text-gray-700">{{ summary }}</p>
+  <div class="mt-4 space-x-4 text-xl">
+    <a href="{{ linkedin }}" class="text-blue-600"><i class="fab fa-linkedin"></i></a>
+    <a href="{{ github }}" class="text-black"><i class="fab fa-github"></i></a>
+    <a href="mailto:{{ email }}" class="text-red-500"><i class="fas fa-envelope"></i></a>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="py-16 px-6">
+  <h2 class="text-3xl font-bold text-center mb-10 text-pink-600">Skills</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="rounded-box p-4 bg-pink-100" data-aos="fade-up">
+      <h3 class="font-semibold mb-2">Programming</h3>
+      <ul>
+        {% for skill in prog_skills.split(',') %}
+          <li>{{ skill.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="rounded-box p-4 bg-pink-100" data-aos="fade-up">
+      <h3 class="font-semibold mb-2">Database</h3>
+      <ul>
+        {% for db in dbms_os.split(',') %}
+          <li>{{ db.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="rounded-box p-4 bg-pink-100" data-aos="fade-up">
+      <h3 class="font-semibold mb-2">Operating Systems</h3>
+      <ul>
+        {% for os_item in os.split(',') %}
+          <li>{{ os_item.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="rounded-box p-4 bg-pink-100" data-aos="fade-up">
+      <h3 class="font-semibold mb-2">Tools</h3>
+      <ul>
+        {% for tool in tools.split(',') %}
+          <li>{{ tool.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="py-16 px-6 bg-yellow-50">
+  <h2 class="text-3xl font-bold text-center mb-10 text-yellow-600">Projects</h2>
+  <div class="max-w-3xl mx-auto p-6 bg-white rounded-box shadow" data-aos="fade-right">
+    <p>{{ projects }}</p>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="py-16 px-6">
+  <h2 class="text-3xl font-bold text-center mb-10 text-purple-600">Certifications</h2>
+  <div class="max-w-3xl mx-auto p-6 bg-purple-100 rounded-box shadow" data-aos="fade-left">
+    <p>{{ certifications }}</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-6 bg-pink-200 mt-10">
+  <p>📱 {{ phone }} | ✉️ {{ email }}</p>
+  <p>&copy; {{ name }}'s Portfolio</p>
+
+  <!-- Download PDF Button -->
+  <form action="/download-portfolio" method="post" class="text-center my-4">
+    {% for key, value in request.form.items() %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+    <button type="submit"
+            style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+      📄 Download PDF
+    </button>
+  </form>
+
+  <!-- Download Code Button -->
+  <form action="/download-portfolio-code" method="post" class="text-center">
+    {% for key, value in request.form.items() %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+    <button type="submit"
+            style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+      💻 Download Code ZIP
+    </button>
+  </form>
+</footer>
+
+<script>AOS.init();</script>
+</body>
+</html>

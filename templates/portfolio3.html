@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ name }} | Neon Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --neon-blue: #00f0ff;
+      --neon-pink: #ff00ff;
+      --neon-green: #39ff14;
+      --neon-purple: #8a2be2;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --blur: blur(14px);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background: #0e0e1f;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 80px 10%;
+      background: radial-gradient(circle at center, #0e0e1f 60%, #050510 100%);
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-text h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: var(--neon-blue);
+      text-shadow: 0 0 15px var(--neon-blue);
+    }
+
+    .hero-text p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    .profile-container {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .profile-img {
+      width: 300px;
+      height: auto;
+      border-radius: 0;
+      box-shadow: 0 0 30px var(--neon-purple), 0 0 60px var(--neon-pink);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      border: 3px solid var(--neon-blue);
+      backdrop-filter: var(--blur);
+    }
+
+    .profile-img:hover {
+      transform: rotateY(8deg) rotateX(3deg) scale(1.05);
+      box-shadow: 0 0 40px var(--neon-green), 0 0 70px var(--neon-pink);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      backdrop-filter: var(--blur);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px var(--neon-purple);
+    }
+
+    .neon-btn {
+      background: transparent;
+      color: var(--neon-blue);
+      border: 2px solid var(--neon-blue);
+      padding: 10px 25px;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 8px var(--neon-blue);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .neon-btn:hover {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+      transform: scale(1.05);
+    }
+
+    .fade-in {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      .profile-container {
+        justify-content: center;
+        margin-top: 2rem;
+      }
+    }
+
+    i.fab:hover {
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-text fade-in">
+      <h1>Hello, I’m {{ name }}</h1>
+      <p>{{ summary }}</p>
+      <br>
+      <a href="#projects"><button class="neon-btn">Explore Projects</button></a>
+    </div>
+    <div class="profile-container">
+      <img src="{{ profile }}" alt="Profile" class="profile-img" />
+    </div>
+  </section>
+
+  <section id="about" class="glass-panel fade-in">
+    <h2 style="color: var(--neon-pink)">About Me</h2>
+    <p>{{ summary }}</p>
+  </section>
+
+  <section id="skills" class="glass-panel fade-in">
+    <h2 style="color: var(--neon-green)">Skills</h2>
+    <p><strong>Programming:</strong> {{ prog_skills }}</p>
+    <p><strong>Database/OS:</strong> {{ dbms_os }}</p>
+    <p><strong>Operating Systems:</strong> {{ os }}</p>
+    <p><strong>Tools:</strong> {{ tools }}</p>
+  </section>
+
+  <section id="projects" class="glass-panel fade-in">
+    <h2 style="color: var(--neon-blue)">Projects</h2>
+    <p>{{ projects }}</p>
+  </section>
+
+  <section id="certifications" class="glass-panel fade-in">
+    <h2 style="color: var(--neon-purple)">Certifications</h2>
+    <p>{{ certifications }}</p>
+  </section>
+
+  <section class="glass-panel fade-in" style="text-align:center">
+    <h2>Connect with Me</h2>
+    <a href="{{ linkedin }}" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+    &nbsp;&nbsp;
+    <a href="{{ github }}" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+  </section>
+
+  <form action="/download-portfolio" method="post" class="text-center" style="margin: 20px 0;">
+    {% for key, value in request.form.items() %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+    <button type="submit" style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+      📄 Download PDF
+    </button>
+  </form>
+
+  <form action="/download-portfolio-code" method="post" class="text-center" style="margin: 20px 0;">
+    {% for key, value in request.form.items() %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+    <button type="submit" style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+      💻 Download Code ZIP
+    </button>
+  </form>
+</body>
+</html>

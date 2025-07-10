@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .theme-box img {
+      pointer-events: none;
+    }
+     /* Optional custom scrollbar */
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background-color: #cbd5e0;
+    border-radius: 4px;
+  }
+  .custom-scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-6xl mx-auto my-10 bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">Build Your Professional Resume</h1>
+    
+    <form action="/generate-resume" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Left Side: Form -->
+      <div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold">Full Name</label>
+            <input name="name" type="text" required class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Phone Number</label>
+            <input name="phone" type="text" required class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Email</label>
+            <input name="email" type="email" required class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">LinkedIn URL</label>
+            <input name="linkedin" type="url" class="w-full border p-2 rounded" />
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold">GitHub URL</label>
+            <input name="github" type="url" class="w-full border p-2 rounded" />
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label class="block font-semibold">Professional Summary</label>
+          <textarea id="summary" name="summary" rows="4" class="w-full border p-2 rounded"></textarea>
+        </div>
+
+
+
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold">Schooling</label>
+            <input name="school" type="text" class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Intermediate</label>
+            <input name="inter" type="text" class="w-full border p-2 rounded" />
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold">Degree</label>
+            <input name="degree" type="text" class="w-full border p-2 rounded" />
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold">Programming Languages</label>
+            <input name="prog_skills" type="text" class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Database</label>
+            <input name="dbms_os" type="text" class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Operating Systems</label>
+            <input name="os" type="text" class="w-full border p-2 rounded" />
+          </div>
+          <div>
+            <label class="block font-semibold">Tools & Technologies</label>
+            <input name="tools" type="text" class="w-full border p-2 rounded" />
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label class="block font-semibold">Projects</label>
+          <textarea name="projects" rows="3" class="w-full border p-2 rounded"></textarea>
+        </div>
+
+        <div class="mt-6">
+          <label class="block font-semibold">Certifications</label>
+          <textarea name="certifications" rows="3" class="w-full border p-2 rounded"></textarea>
+        </div>
+      </div>
+
+      <!-- Right Side: Themes -->
+<div>
+  <label class="block font-bold text-lg mb-4">Choose a Resume Template</label>
+
+  <!-- 🎯 Scrollable theme container -->
+  <div class="h-[500px] overflow-y-auto scroll-smooth pr-1 custom-scroll">
+    <div class="grid grid-cols-2 gap-4">
+      {% for i in range(1, 14) %}
+      <label for="theme{{ i }}">
+        <div class="theme-box border rounded p-1 cursor-pointer" id="box-theme{{ i }}">
+          <input type="radio" id="theme{{ i }}" name="template" value="theme{{ i }}" class="hidden" />
+          <img src="/static/themes/theme{{ i }}.png" alt="Theme {{ i }}" class="rounded shadow w-full h-40 object-cover" />
+          <p class="text-center text-sm font-medium mt-1">Theme {{ i }}</p>
+        </div>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+      <!-- Button -->
+      <div class="col-span-1 md:col-span-2 text-center mt-8">
+        <button type="submit"
+          class="px-8 py-3 bg-blue-600 text-white font-bold rounded hover:bg-blue-700 transition duration-300">
+          🚀 Generate Resume
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ✅ JavaScript for theme highlight -->
+ <!-- ✅ JavaScript for theme highlight -->
+<script>
+  const boxes = document.querySelectorAll('.theme-box');
+  boxes.forEach(box => {
+    box.addEventListener('click', () => {
+      boxes.forEach(b => b.classList.remove('ring-4', 'ring-blue-500', 'bg-blue-100'));
+      box.classList.add('ring-4', 'ring-blue-500', 'bg-blue-100');
+      box.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+
+ 
+</script>
+
+</body>
+</html>
