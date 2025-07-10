@@ -1,0 +1,151 @@
+<!-- templates/portfolio7.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ name }} – Developer Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .nav-open { display: block !important; }
+    @media (min-width: 768px) { .mobile-menu { display: none !important; } }
+    .break-words { word-wrap: break-word; word-break: break-word; }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+  <!-- Nav -->
+  <nav class="fixed w-full bg-white shadow-sm z-10">
+    <div class="max-w-5xl mx-auto flex justify-between items-center p-4">
+      <div class="font-bold text-xl">{{ name }}</div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#home" class="hover:text-indigo-600">Home</a>
+        <a href="#skills" class="hover:text-indigo-600">Skills</a>
+        <a href="#projects" class="hover:text-indigo-600">Projects</a>
+        <a href="#contact" class="hover:text-indigo-600">Contact</a>
+      </div>
+      <button id="burger" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+    </div>
+    <div id="mobile" class="mobile-menu hidden bg-white shadow-sm">
+      <a href="#home" class="block p-4">Home</a>
+      <a href="#skills" class="block p-4">Skills</a>
+      <a href="#projects" class="block p-4">Projects</a>
+      <a href="#contact" class="block p-4">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="min-h-screen flex flex-col justify-center items-center bg-indigo-50 text-center pt-20">
+    <img src="{{ profile }}" alt="Profile" class="w-40 h-40 rounded-full shadow-lg mb-4 object-cover">
+    <h1 class="text-4xl font-bold">{{ name }}</h1>
+    <p class="mt-2 text-gray-600">{{ summary }}</p>
+    <div class="mt-4 space-x-4 text-xl">
+      <a href="{{ linkedin }}" class="text-blue-600"><i class="fab fa-linkedin"></i></a>
+      <a href="{{ github }}" class="text-gray-900"><i class="fab fa-github"></i></a>
+      <a href="mailto:{{ email }}" class="text-red-600"><i class="fas fa-envelope"></i></a>
+    </div>
+  </section>
+
+  <!-- Skills -->
+ <section id="skills" class="py-20 bg-white">
+  <div class="max-w-4xl mx-auto text-center mb-10">
+    <h2 class="text-3xl font-bold">Skills</h2>
+  </div>
+  <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8">
+
+    <!-- Programming Skills -->
+    <div class="p-6 bg-indigo-50 rounded shadow" data-sr="fade-up">
+      <h3 class="text-lg font-semibold mb-2">Programming</h3>
+      <ul class="list-disc list-inside text-sm space-y-1 break-words">
+        {% for skill in prog_skills.split(',') %}
+          <li>{{ skill.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Database Skills -->
+    <div class="p-6 bg-indigo-50 rounded shadow" data-sr="fade-up">
+      <h3 class="text-lg font-semibold mb-2">Database</h3>
+      <ul class="list-disc list-inside text-sm space-y-1 break-words">
+        {% for db in dbms_os.split(',') %}
+          <li>{{ db.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- OS Skills -->
+    <div class="p-6 bg-indigo-50 rounded shadow" data-sr="fade-up">
+      <h3 class="text-lg font-semibold mb-2">Operating Systems</h3>
+      <ul class="list-disc list-inside text-sm space-y-1 break-words">
+        {% for o in os.split(',') %}
+          <li>{{ o.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Tools Skills -->
+    <div class="p-6 bg-indigo-50 rounded shadow" data-sr="fade-up">
+      <h3 class="text-lg font-semibold mb-2">Tools</h3>
+      <ul class="list-disc list-inside text-sm space-y-1 break-words">
+        {% for tool in tools.split(',') %}
+          <li>{{ tool.strip() }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Projects -->
+  <section id="projects" class="py-20 bg-gray-50">
+    <div class="max-w-4xl mx-auto mb-10 text-center">
+      <h2 class="text-3xl font-bold">Projects</h2>
+    </div>
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div class="p-6 bg-white rounded shadow hover:shadow-md transition" data-sr="fade-right">
+        <p>{{ projects }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-indigo-50">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
+      <p>📞 {{ phone }} | ✉️ <a href="mailto:{{ email }}">{{ email }}</a></p>
+    </div>
+  </section>
+   <!-- Download PDF Button -->
+<form action="/download-portfolio" method="post" class="text-center" style="margin: 20px 0;">
+  {% for key, value in request.form.items() %}
+    <input type="hidden" name="{{ key }}" value="{{ value }}">
+  {% endfor %}
+  <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+  <button type="submit"
+          style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+    📄 Download PDF
+  </button>
+</form>
+
+<!-- Download Code Button -->
+<form action="/download-portfolio-code" method="post" class="text-center" style="margin: 20px 0;">
+  {% for key, value in request.form.items() %}
+    <input type="hidden" name="{{ key }}" value="{{ value }}">
+  {% endfor %}
+  <input type="hidden" name="theme" value="{{ request.form['template'] }}">
+  <button type="submit"
+          style="padding:10px 20px; background:#00fff7; color:#000; font-weight: bold; border-radius:6px; cursor:pointer;">
+    💻 Download Code ZIP
+  </button>
+</form>
+
+  <script>
+    document.getElementById('burger').onclick = () => {
+      document.getElementById('mobile').classList.toggle('nav-open');
+    };
+    ScrollReveal().reveal('[data-sr]', { distance: '50px', duration: 800, easing: 'ease-in-out', reset: true });
+  </script>
+</body>
+</html>

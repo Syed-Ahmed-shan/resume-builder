@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} - Resume</title>
+
+  <!-- ✅ Reliable html2pdf CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    .page {
+      background: white;
+      width: 210mm;
+      height: 297mm;
+      padding: 20mm;
+      margin: auto;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      display: block;
+      page-break-after: always;
+    }
+
+    @media print {
+      body, .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 960px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background: #003049;
+      color: white;
+      padding: 30px;
+      width: 30%;
+    }
+
+    .sidebar h1 {
+      font-size: 24px;
+    }
+
+    .sidebar p {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .main {
+      padding: 30px;
+      width: 70%;
+    }
+
+    .main h2 {
+      font-size: 20px;
+      color: #003049;
+      border-bottom: 1px solid #ccc;
+      margin-top: 20px;
+    }
+
+    .main p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    a {
+      color: #fcbf49;
+      text-decoration: none;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .download-btn {
+      padding: 10px 20px;
+      background-color: #1d4ed8;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .download-btn:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Resume Section with ID -->
+  <div id="resume" class="container">
+    <div class="sidebar">
+      <h1>{{ name }}</h1>
+      <p>{{ phone }}</p>
+      <p>{{ email }}</p>
+      <p><a href="{{ linkedin }}">LinkedIn</a></p>
+      <p><a href="{{ github }}">GitHub</a></p>
+    </div>
+    <div class="main">
+      <h2>Summary</h2>
+      <p>{{ summary }}</p>
+
+      <h2>Education</h2>
+      <p>School: {{ school }}</p>
+      <p>Inter: {{ inter }}</p>
+      <p>Degree: {{ degree }}</p>
+
+      <h2>Skills</h2>
+      <p>Programming: {{ prog_skills }}</p>
+      <p>DB: {{ dbms_os }}</p>
+      <p>OS: {{ os }}</p>
+      <p>Tools: {{ tools }}</p>
+
+      <h2>Projects</h2>
+      <p>{{ projects }}</p>
+
+      <h2>Certifications</h2>
+      <p>{{ certifications }}</p>
+    </div>
+  </div>
+
+  <!-- ✅ Download Button -->
+  <div class="button-container">
+    <button class="download-btn" onclick="downloadPDF()">📥 Download Resume PDF</button>
+  </div>
+
+  <!-- ✅ JS Script for Download -->
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById("resume");
+
+      if (!element) {
+        alert("Resume element not found!");
+        return;
+      }
+
+      const opt = {
+        margin: 0,
+        filename: "{{ name|replace(' ', '_') }}_resume.pdf",
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollY: 0
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css', 'legacy']
+        }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+
+</body>
+</html>

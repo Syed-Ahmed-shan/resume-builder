@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+</head>
+<body>
+    <h2>Enter Your Details</h2>
+    <form action="/generate" method="POST">
+        Name: <input type="text" name="name"><br>
+        Email: <input type="email" name="email"><br>
+        LinkedIn: <input type="text" name="linkedin"><br>
+        GitHub: <input type="text" name="github"><br>
+        Skills (comma separated): <input type="text" name="skills"><br>
+        Education: <input type="text" name="education"><br>
+        Certifications: <input type="text" name="certifications"><br>
+        GPA / Percentage: <input type="text" name="percentage"><br>
+        <br>
+        Select Theme:
+        <select name="theme">
+            <option value="theme1">Theme 1</option>
+            <option value="theme2">Theme 2</option>
+        </select><br><br>
+        <input type="submit" value="Generate Portfolio">
+    </form>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} - Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    body {
+      background: #f3f4f6;
+    }
+
+    .page {
+      background: white;
+      width: 210mm;
+      height: 297mm;
+      padding: 20mm;
+      margin: auto;
+      box-sizing: border-box;
+      display: block;
+      page-break-after: always;
+    }
+
+    ul, p, h2, h1 {
+      page-break-inside: avoid;
+    }
+
+    @media print {
+      body, .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans">
+
+  <!-- ✅ Resume Container -->
+  <div class="page" id="resume">
+    <div class="flex w-full h-full overflow-hidden rounded-lg">
+
+      <!-- ✅ Left Panel (35%) -->
+      <div class="flex-[1_1_35%] bg-blue-800 text-white p-4">
+        <h1 class="text-2xl font-bold">{{ name }}</h1>
+        <p class="text-sm mt-2">{{ email }}</p>
+        <p class="text-sm">{{ phone }}</p>
+        <a href="{{ linkedin }}" class="text-sm underline block mt-2">LinkedIn</a>
+        <a href="{{ github }}" class="text-sm underline">GitHub</a>
+      </div>
+
+      <!-- ✅ Right Panel (65%) with no left padding -->
+      <div class="flex-[1_1_65%] pl-0 pr-4">
+        <div class="ml-4 mt-2">
+          <h2 class="text-lg font-semibold border-b mb-2">Summary</h2>
+          <p class="mb-4 text-sm">{{ summary }}</p>
+
+          <h2 class="text-lg font-semibold border-b mb-2">Education</h2>
+          <ul class="mb-4 text-sm list-disc ml-5">
+            <li>{{ school }}</li>
+            <li>{{ inter }}</li>
+            <li>{{ degree }}</li>
+          </ul>
+
+          <h2 class="text-lg font-semibold border-b mb-2">Skills</h2>
+          <p class="text-sm"><strong>Programming:</strong> {{ prog_skills }}</p>
+          <p class="text-sm"><strong>DBMS/OS:</strong> {{ dbms_os }}</p>
+          <p class="text-sm"><strong>Operating Systems:</strong> {{ os }}</p>
+          <p class="text-sm"><strong>Tools & Technologies:</strong> {{ tools }}</p>
+
+          {% if projects %}
+          <h2 class="text-lg font-semibold border-b mb-2 mt-4">Projects</h2>
+          <p class="text-sm">{{ projects }}</p>
+          {% endif %}
+
+          {% if certifications %}
+          <h2 class="text-lg font-semibold border-b mb-2 mt-4">Certifications</h2>
+          <p class="text-sm">{{ certifications }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Download Button -->
+  <div class="text-center mt-8">
+    <button onclick="downloadPDF()"
+            class="px-6 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+      📥 Download Resume PDF
+    </button>
+  </div>
+
+  <!-- ✅ PDF Script -->
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById("resume");
+
+      const opt = {
+        margin: 0,
+        filename: "{{ name|replace(' ', '_') }}_resume.pdf",
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollY: 0
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css', 'legacy']
+        }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} - Resume</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #eef1f5;
+      color: #333;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      margin: auto;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .sidebar {
+      width: 30%;
+      background: #2c3e50;
+      color: #fff;
+      padding: 30px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    .sidebar h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar .info {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+    }
+
+    .sidebar i {
+      margin-right: 10px;
+    }
+
+    .main {
+      width: 70%;
+      background: #fff;
+      padding: 30px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .section h2 {
+      font-size: 20px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .section p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .download-btn {
+      text-align: center;
+      margin: 30px auto;
+    }
+
+    .download-btn button {
+      padding: 10px 25px;
+      background: #2c3e50;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .download-btn button:hover {
+      background: #1a2533;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page" id="resume">
+  <div class="container">
+    <div class="sidebar">
+      <h1>{{ name }}</h1>
+      <div class="info">
+        <p><i class="fas fa-phone"></i>{{ phone }}</p>
+        <p><i class="fas fa-envelope"></i>{{ email }}</p>
+        <p><i class="fab fa-linkedin"></i><a href="{{ linkedin }}">LinkedIn</a></p>
+        <p><i class="fab fa-github"></i><a href="{{ github }}">GitHub</a></p>
+      </div>
+    </div>
+    <div class="main">
+      <div class="section">
+        <h2><i class="fas fa-user"></i> Summary</h2>
+        <p>{{ summary }}</p>
+      </div>
+      <div class="section">
+        <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+        <p><strong>School:</strong> {{ school }}</p>
+        <p><strong>Inter:</strong> {{ inter }}</p>
+        <p><strong>Degree:</strong> {{ degree }}</p>
+      </div>
+      <div class="section">
+        <h2><i class="fas fa-laptop-code"></i> Skills</h2>
+        <p><strong>Programming:</strong> {{ prog_skills }}</p>
+        <p><strong>Database:</strong> {{ dbms_os }}</p>
+        <p><strong>OS:</strong> {{ os }}</p>
+        <p><strong>Tools:</strong> {{ tools }}</p>
+      </div>
+      <div class="section">
+        <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+        <p>{{ projects }}</p>
+      </div>
+      <div class="section">
+        <h2><i class="fas fa-certificate"></i> Certifications</h2>
+        <p>{{ certifications }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Download Button -->
+<div class="download-btn">
+  <button onclick="downloadPDF()">📥 Download Resume PDF</button>
+</div>
+
+<!-- ✅ PDF Script -->
+<script>
+  function downloadPDF() {
+    const element = document.getElementById("resume");
+
+    const opt = {
+      margin: 0,
+      filename: "{{ name|replace(' ', '_') }}_resume.pdf",
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+</body>
+</html>

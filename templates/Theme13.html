@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} - Resume</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #edf2f7;
+      color: #2d3748;
+    }
+
+    .a4-wrapper {
+      width: 210mm;
+      min-height: 297mm;
+      margin: auto;
+      background: white;
+      padding: 30mm 20mm;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 6px;
+      color: #2c5282;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #4a5568;
+    }
+
+    .header a {
+      color: #2b6cb0;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+      padding: 15px 20px;
+      background: #f7fafc;
+      border-left: 6px solid #3182ce;
+      border-radius: 8px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      color: #2b6cb0;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #cbd5e0;
+      padding-bottom: 5px;
+    }
+
+    .section p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .download-btn {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .download-btn button {
+      background: #3182ce;
+      color: white;
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .download-btn button:hover {
+      background: #2b6cb0;
+    }
+
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      .download-btn {
+        display: none;
+      }
+      .a4-wrapper {
+        box-shadow: none;
+        margin: 0;
+        padding: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ A4 Container -->
+<div class="a4-wrapper" id="resume">
+  <div class="header">
+    <h1>{{ name }}</h1>
+    <p>{{ phone }} | {{ email }} |
+      <a href="{{ linkedin }}">LinkedIn</a> |
+      <a href="{{ github }}">GitHub</a>
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Professional Summary</h2>
+    <p>{{ summary }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Education</h2>
+    <p><strong>School:</strong> {{ school }}</p>
+    <p><strong>Intermediate:</strong> {{ inter }}</p>
+    <p><strong>Degree:</strong> {{ degree }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Skills</h2>
+    <p><strong>Programming:</strong> {{ prog_skills }}</p>
+    <p><strong>Database:</strong> {{ dbms_os }}</p>
+    <p><strong>Operating Systems:</strong> {{ os }}</p>
+    <p><strong>Tools:</strong> {{ tools }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Projects</h2>
+    <p>{{ projects }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Certifications</h2>
+    <p>{{ certifications }}</p>
+  </div>
+</div>
+
+<!-- ✅ Download Button -->
+<div class="download-btn">
+  <button onclick="downloadPDF()">📥 Download Resume PDF</button>
+</div>
+
+<!-- ✅ Script -->
+<script>
+  function downloadPDF() {
+    const element = document.getElementById("resume");
+
+    const opt = {
+      margin: 0,
+      filename: '{{ name|replace(" ", "_") }}_resume.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+
+</body>
+</html>

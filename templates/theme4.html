@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ✅ Reliable html2pdf CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* Prevent page breaks inside these */
+    .mb-6, .section, ul, li, p {
+      page-break-inside: avoid;
+    }
+
+    .page {
+      background: white;
+      width: 210mm;
+      height: 297mm; /* Exact A4 */
+      padding: 20mm;
+      margin: auto;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      display: block;
+      page-break-after: always;
+    }
+
+    @media print {
+      body, .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white font-sans text-gray-800">
+
+  <!-- ✅ Added id="resume" and class="page" -->
+  <div id="resume" class="page max-w-6xl mx-auto mt-10 p-8 border border-gray-300 shadow-md rounded-lg">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">{{ name }}</h1>
+        <p class="text-sm">{{ email }} | {{ phone }}</p>
+        <p>
+          <a href="{{ linkedin }}" class="text-blue-600 hover:underline">LinkedIn</a> |
+          <a href="{{ github }}" class="text-blue-600 hover:underline">GitHub</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8">
+      <div>
+        <h2 class="text-lg font-bold border-b pb-1 text-blue-700">Summary</h2>
+        <p class="mt-2 text-sm">{{ summary }}</p>
+
+        <h2 class="text-lg font-bold border-b pb-1 mt-4 text-blue-700">Education</h2>
+        <ul class="list-disc ml-5 mt-2 text-sm">
+          <li>{{ school }}</li>
+          <li>{{ inter }}</li>
+          <li>{{ degree }}</li>
+        </ul>
+
+        {% if certifications %}
+        <h2 class="text-lg font-bold border-b pb-1 mt-4 text-blue-700">Certifications</h2>
+        <p class="mt-2 text-sm">{{ certifications }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <h2 class="text-lg font-bold border-b pb-1 text-blue-700">Skills</h2>
+        <p class="mt-2 text-sm"><strong>Programming:</strong> {{ prog_skills }}</p>
+        <p class="mt-2 text-sm"><strong>DBMS/OS:</strong> {{ dbms_os }}</p>
+        <p class="text-sm"><strong>Operating Systems:</strong> {{ os }}</p>
+        <p class="text-sm"><strong>Tools & Technologies:</strong> {{ tools }}</p>
+
+        {% if projects %}
+        <h2 class="text-lg font-bold border-b pb-1 mt-4 text-blue-700">Projects</h2>
+        <p class="mt-2 text-sm">{{ projects }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Download Button -->
+  <div class="text-center mt-8">
+    <button onclick="downloadPDF()"
+            class="px-6 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+      📥 Download Resume PDF
+    </button>
+  </div>
+
+  <!-- ✅ PDF Download Script -->
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById("resume");
+
+      if (!element) {
+        alert("Resume element not found!");
+        return;
+      }
+
+      const opt = {
+        margin:       [0.5, 0.5, 0.5, 0.5], // inches
+        filename:     "{{ name|replace(' ', '_') }}_resume.pdf",
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+          scale: 2,
+          useCORS: true,
+          scrollY: 0
+        },
+        jsPDF: {
+          unit: 'in',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css', 'legacy']
+        }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+
+</body>
+</html>

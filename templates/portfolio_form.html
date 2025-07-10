@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-4xl mx-auto my-10 bg-white p-8 rounded-lg shadow">
+    <h1 class="text-3xl font-bold text-center text-indigo-700 mb-8">Build Your Professional Portfolio</h1>
+    <form action="/generate-portfolio" method="POST" enctype="multipart/form-data">
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label class="block font-semibold">Full Name</label>
+          <input name="name" type="text" required class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Phone Number</label>
+          <input name="phone" type="text" required class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Email</label>
+          <input name="email" type="email" required class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">LinkedIn URL</label>
+          <input name="linkedin" type="text" class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">GitHub URL</label>
+          <input name="github" type="text" class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Upload Profile Picture</label>
+          <input name="profile" type="file" accept="image/*" class="w-full border p-2 rounded" />
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <label class="block font-semibold">Professional Summary</label>
+        <textarea name="summary" rows="3" class="w-full border p-2 rounded"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mt-6">
+        <div>
+          <label class="block font-semibold">Programming Skills</label>
+          <input name="prog_skills" type="text" class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Database Skills</label>
+          <input name="dbms_os" type="text" class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Operating Systems</label>
+          <input name="os" type="text" class="w-full border p-2 rounded" />
+        </div>
+        <div>
+          <label class="block font-semibold">Tools</label>
+          <input name="tools" type="text" class="w-full border p-2 rounded" />
+        </div>
+      </div>
+
+       <div class="mt-6">
+        <label class="block font-semibold">
+          "Project Title:Description" | 
+          <span class="bg-yellow-200 text-yellow-900 px-1 rounded">
+            (⚠️Use this format for each project)
+          </span>
+        </label>
+        <textarea name="projects" rows="3" class="w-full border p-2 rounded"></textarea>
+      </div>
+
+    <dv class="mt-6">
+      <label class="block font-semibold">
+        "Certification Title:Description" | 
+        <span class="bg-yellow-200 text-yellow-900 px-1 rounded">
+          (⚠️Use this format for each certification)
+        </span>
+      </label>
+      <textarea name="certifications" rows="4" class="w-full border p-2 rounded"
+        placeholder='e.g.\nAWS Cloud Practitioner: Entry-level cloud fundamentals\nJava Developer: Full stack Java web development'>
+      </textarea>
+    </dv>
+
+      <!-- Theme Selector -->
+      <div class="mt-6">
+        <label class="block font-semibold">Select Portfolio Theme</label>
+        <select name="template" class="w-full border p-2 rounded">
+          <option value="portfolio1">Portfolio Theme 1</option>
+          <option value="portfolio2">Portfolio Theme 2</option>
+          <option value="portfolio3">Portfolio Theme 3</option>
+          <option value="portfolio4">Portfolio Theme 4</option>
+          <option value="portfolio5">Portfolio Theme 5</option>
+          <option value="portfolio6">Portfolio Theme 6</option>
+          <option value="portfolio7" >Portfolio Theme 7</option>
+          <option value="portfolio8">Portfolio Theme 8</option>
+          <option value="portfolio9">Portfolio Theme 9</option>
+          <option value="portfolio10">Portfolio Theme 10</option>
+        </select>
+      </div>
+
+      <div class="mt-8 text-center">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">Generate Portfolio</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
